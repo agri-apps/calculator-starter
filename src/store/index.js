@@ -3,12 +3,22 @@ const createStore = (initialState = {}, changeFn) => {
     return {
         _store: initialState,
 
+        _paused: false,
+
         _watchers: {},
 
         _changeFn: typeof changeFn === 'function' ? changeFn : null,
 
         getStore() {
             return Object.assign({}, this._store);
+        },
+
+        pause() {
+            this._paused = true;
+        },
+
+        resume() {
+            this._paused = false;
         },
 
         get(key) {
@@ -30,14 +40,14 @@ const createStore = (initialState = {}, changeFn) => {
                     delete this._store[key];
                 }
 
-                if (this._watchers[key]) {
+                if (!this._paused && this._watchers[key]) {
                     this._watchers[key].forEach( watcher => {
                         const fn = watcher[1];
                         fn(newValue, oldValue);
                     });
                 }
 
-                if (this._changeFn) {
+                if (!this._paused && this._changeFn) {
                     this._changeFn({key, newValue, oldValue, state: this.getStore()});
                 }
             }

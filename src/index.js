@@ -1,45 +1,53 @@
 import "./assets/css/index.css";
+import "./assets/css/progress.css";
+import "./assets/css/stats.css";
+import "./assets/css/tooltips.css";
+import "./assets/css/inputs.css";
+
 import * as Router from "navigo";
 import createStore from "./store";
 import { slideDiv, tmpl } from "./helpers";
+import Swipe from './helpers/swipe';
 
-import aboutHTML from "./pages/about.html";
-import homeHTML from "./pages/home.html";
+import resultsHTML from "./pages/results.html";
+import weightsHTML from "./pages/weights.html";
 
 var root = null;
 var useHash = true;
 var hash = "#!";
 var router = new Router(root, useHash, hash);
 
-const storeKey = "webpack+html";
+window.router = router;
+
+const storeKey = "calculator-app";
 
 let state = localStorage.getItem(storeKey)
   ? JSON.parse(localStorage.getItem(storeKey))
   : {
-      message: "Time!",
-      time: new Date().toISOString("en-US"),
-      subscribed: false,
+      currentWeight: 650,
+      marketWeight: 1400,
+      weightGained: 750,
+      weightUnits: 'lbs'
     };
 
-const store = createStore(state, ({ key, newValue, oldValue, state }) => {
-  if (!state.subscribed) {
-    state.email = "";
-  }
-  localStorage.setItem(storeKey, JSON.stringify(state));
+const store = createStore(state, ({ state }) => {
+
+  const { currentWeight = 0, marketWeight = 0 } = state;
+
+  let weightGained = marketWeight - currentWeight;
+
+  store.pause();
+  store.set('weightGained', weightGained);
+  store.set('weightUnits', 'lbs');
+  store.resume();
+
+  localStorage.setItem(storeKey, JSON.stringify({...state, weightGained}));
 });
 
 let currentHTML = "";
 
 const validations = {
-  subscriber: (values, done) => {
-    if (values.email) {
-      store.remove("subscribeError");
-      done();
-    } else {
-      store.set("subscribeError", "Please enter your email.");
-      update();
-    }
-  },
+  
 };
 
 function $id(id) {
@@ -60,6 +68,10 @@ function unbind() {
     let evt = item.dataset["event"] || "blur";
     item.removeEventListener(evt, listen, false);
   });
+  [].slice.call(document.querySelectorAll("[data-connect]")).forEach((item) => {
+    let evt = item.dataset["event"] || "input";
+    item.removeEventListener(evt, connect, false);
+  });
 }
 
 function bindAll() {
@@ -67,10 +79,27 @@ function bindAll() {
     let evt = item.dataset["event"] || "blur";
     item.addEventListener(evt, listen, false);
   });
+
+  console.log('connectors', [].slice.call(document.querySelectorAll("[data-connect]")));
+
+  [].slice.call(document.querySelectorAll("[data-connect]")).forEach((item) => {
+    let name = item.dataset["connect"];
+    let evt = item.dataset["event"] || 'input';
+    let target = document.querySelector(`[name="${name}"]`)
+    console.log('connecting', name, evt, target)
+    if (target) {
+      item.addEventListener(evt, connect.bind(null, target), false);
+    }
+  });
 }
 
 function loadHTML(id, html) {
   $id(id).innerHTML = html;
+}
+
+function connect(item, evt) {
+  console.log('connect', item, evt);
+  item.value = evt.target.value;
 }
 
 function listen(e) {
@@ -98,8 +127,6 @@ function listen(e) {
   };
 
   let done = () => {};
-
-  console.log("listen", value, event, bind);
 
   switch (event) {
     case "click":
@@ -142,8 +169,6 @@ function listen(e) {
 
 router.hooks({
   before: (done) => {
-    store.set("time", new Date().toISOString("en-US"));
-
     // slide transitions
     let el = $id("content");
     if (el && el.firstChild) {
@@ -157,16 +182,37 @@ router.hooks({
   },
   after: () => {
     bindAll();
+    [].slice.call(document.querySelectorAll('[data-route].active')).forEach(item => {
+      item.classList.remove('active');
+    });
+    let url = router.lastRouteResolved().url;
+    let activeEl = document.querySelector(`[data-route="#!${url}"]`);
+    if (activeEl) {
+      activeEl.classList.add('active');
+    }
+
   },
 });
 
 router
   .on({
-    about: () => {
-      update(aboutHTML);
+    weights: () => {
+      update(weightsHTML);
     },
     "*": () => {
-      update(homeHTML);
+      update(resultsHTML);
     },
   })
   .resolve();
+
+  var swiper = new Swipe('#content');
+  swiper.onLeft(function (e) {
+    const { url } = router.lastRouteResolved();
+    router.navigate(url === 'weights' ? 'results' : 'weights');
+  });
+  swiper.onRight(function () {
+    const { url } = router.lastRouteResolved();
+    router.navigate(url === 'weights' ? 'results' : 'weights');
+    console.log('swipe right', url);
+  });
+  swiper.run();

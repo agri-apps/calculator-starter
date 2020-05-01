@@ -4,9 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Calculator</title>
     <style>
-        [x-cloak] { display: none; }
+        [x-cloak] {
+            display: none;
+        }
+
         button.link {
             display: none;
             outline: none;
@@ -15,14 +18,47 @@
 </head>
 
 <body>
-    <header>
-        <nav class="pa3 pa4-ns">
-            <a class="nav-link dim black b f6 f5-ns dib mr3" href="#!" title="Home">Webpack + HTML</a>
-            <a class="nav-link dim gray    f6 f5-ns dib mr3" href="#!" title="Home">Home</a>
-            <a class="nav-link dim gray    f6 f5-ns dib mr3" href="#!/about" title="About">About</a>           
-        </nav>
-    </header>
-    <div id="content" class="px3 px4-ns"></div>
+    <div class="pa3 pa4-ns">
+        <header>
+            <nav>
+                <a class="nav-link dim black b f6 f5-ns dib mr3" href="#!" title="Home"><span class="text-green">AG</span> Calculators</a>
+                <a class="nav-link dim gray    f6 f5-ns dib mr3" href="https://ag-calculators.com/collections"
+                    title="Collections">Collections</a>
+                <a class="nav-link dim gray    f6 f5-ns dib mr3" href="https://ag-calculators.com/browse"
+                    title="Browse">Browse</a>
+            </nav>
+        </header>
+        <div class="px3 px4-ns">
+            <div class="flex items-center flex-col flex-row-ns">
+                <h1 class="mr5-ns text-center text-left-ns">
+                    Total Weight Gain
+                    <small class="f6 text-gray db ml2 mt2">Calculates the total amount of weight gained.</small>
+                </h1>
+                <img x-cloak class="main-image" src="https://www.svgrepo.com/show/87517/cow-silhouette.svg"
+                    alt="cattle" />
+            </div>
+
+            <div class="flex justify-center justify-start-ns items-center text-gray"><img width="24"
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAYFBMVEX////MJizKEBnIAAD89PXKChXMIynPMDbLHCPZb3L45ebJAAjmqqzJChXRSEztvb7loqP13d7jl5nwyMnQPUL9+fnONTruwsP56+zikZP019jpr7Dz0NHmpqfrtbfXY2f211y3AAABpklEQVR4nO3c207CUBBAUWm5KKAgiuIF+f+/NOHZk8zAqRzI2h8w7UratA/T3t1JkiRJkiRJkiRJqtK8mzXedHmmsJ823uRc4WLUeB1hSHjpK7FUNeH09anJ3qa1hI/v5w0Zqn1XTbiqc0a1WxNGIrxo1YW751S5A50yvLpw3y8S9ePUgT5yw4cRLrvMu8YkJ9zkhhMSEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhIS7vtJovTmXmr4MMLtONN89Jpo9pkaPh5GmGuc+tqmT66jHru4MHNjLQj/ijAUYTlCwkCEoQjLERIGIgxFWI6QMBBhKMJyhISBCEMRliMkDEQYirAcIWEgwlCE5QgJAxGGIixHSBiIMNTpwm3fJWpjr23+kmm1/kq0/E4NfxlGePv7pbe/I0xISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEhISEh4TcLb39xrLsJQhBeNMNRR2P3kfj/7T2031YSjrm+y4yO0jrDlCAnn/X3jLc4U7g4PjXdo9FEmSZIkSZIkSZIkXWG/l7S6TbzF7aoAAAAASUVORK5CYII=" />
+                Sponsored by Purina Mills, LLC.</div>
+
+        </div>
+        <div id="content" class="mt2"></div>
+        <div class="progress px3 px4-ns">
+            <a class="step" data-route="#!weights" data-tooltip aria-description="Weights" href="#!weights">
+                <span class="step-marker"></span>
+            </a>
+            <a class="step result-step" data-route="#!results" data-tooltip aria-description="Results" href="#!results">
+                <span class="step-marker"></span>
+            </a>
+        </div>
+        <div class="mt5 call-to-action px3 px4-ns">
+            Want more, try Agri Apps for a whole solution to managing your operations.
+        </div>
+        <p class="mt5 px3 px4-ns f7 gray-text">* <span>By utilizing the functionality on this website, you agree to
+                these <a href="/terms-conditions">terms &amp; conditions</a>.</span></p>
+        <footer class="f7 text-gray text-center text-left-ns px4-ns pb3">&copy; <span class="text-green">AG</span> Calculators 2020</footer>
+    </div>
 </body>
 
 </html>

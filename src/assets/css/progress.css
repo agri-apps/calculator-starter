@@ -1,0 +1,51 @@
+.progress {
+    display: flex;
+}
+.progress .step {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: #ebebeb;
+    margin-right: 10px;
+    border-radius: 50%; 
+    cursor: pointer;
+    outline: none;
+    border-width: 2px;
+}
+.progress .step:focus {
+    border-style: dotted;
+    
+}
+.progress .step.result-step.active .step-marker:after {
+    content: '\1f5f8';
+    color: var(--white);
+    font-weight: 900;
+    font-size: 1.3em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.progress .step:not(.result-step).active .step-marker:after {
+    content: '\1f5f8';
+    color: #333;
+    font-weight: 900;
+    font-size: 1.3em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.progress .step:last-child {
+    margin-right: 0;
+}
+.progress .step.result-step {
+    background-color: rgba(34, 139, 34, .3);
+}
+.progress .step.result-step.active:after {
+    color: #fff;
+}
+.progress .step:not(.active):hover {
+    background-color: #ccc;
+}

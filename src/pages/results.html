@@ -1,0 +1,23 @@
+<article class="page px3 px4-ns">
+    <dl class="dib mr5">
+        <dd class="f6 f5-ns b ml0">Current Weight</dd>
+        <dd class="f3 f2-ns b ml0" onclick="router.navigate('#!weights')">
+            <%this.currentWeight%>
+            <span class="units"><%this.weightUnits%></span>
+        </dd>
+    </dl>
+    <dl class="dib mr5">
+        <dd class="f6 f5-ns b ml0">Market Weight</dd>
+        <dd class="f3 f2-ns b ml0" onclick="router.navigate('#!weights')">
+            <%this.marketWeight%>
+            <span class="units"><%this.weightUnits%></span>
+        </dd>
+    </dl>
+    <dl class="dib mr5">
+        <dd class="f6 f5-ns b ml0 result">Weight Gained</dd>
+        <dd class="f3 f2-ns b ml0">
+            <%this.weightGained%>
+            <span class="units"><%this.weightUnits%></span>
+        </dd>
+    </dl>
+</article>
