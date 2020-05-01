@@ -1,9 +1,9 @@
-# Webpack Web Starter
+# Calculator Starter
 
-Quick start webpack web project template
+Quick start calculator template
 
 ## Instructions
 
-Clone `https://github.com/agri-apps-us/webpack-web-starter.git`
+Clone `https://github.com/agri-apps/calculator-starter.git`
 
 Run `npm install` to install necessary dependencies.
